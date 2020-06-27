@@ -1,0 +1,5 @@
+- name: samba installed
+  become: true
+  apt:
+    state: latest
+    name: samba
