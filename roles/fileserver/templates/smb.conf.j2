@@ -1,0 +1,50 @@
+[global]
+   workgroup = {{fileserver_workgroup}}
+   server string = {{fileserver_string}}
+   mdns name = mdns
+
+   server role = standalone server
+
+   smb encrypt = mandatory
+   usershare allow guests = yes
+
+   panic action = /usr/share/samba/panic-action %d
+
+   # Logging Config. the %m indicates per machine.
+   logging = file
+   log file = /var/log/samba/log.%m
+   # individual log size is in KB:
+   max log size = 1000
+
+   # better apple support. taken from:https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X
+
+   vfs objects = catia fruit streams_xattr
+   fruit:metadata = stream
+   fruit:model = Macmini
+   fruit:veto_appledouble = no
+   fruit:posix_rename = yes
+   fruit:zero_file_id = yes
+   fruit:wipe_intentionally_left_blank_rfork = yes
+   fruit:delete_empty_adfiles = yes
+
+[chrisfarber]
+    comment = Samba on Ubuntu
+    path = /ssd/chrisfarber
+    guest ok = yes
+    read only = no
+    browsable = yes
+    writeable = yes
+
+
+[TimeMachine]
+    comment = Time Machine
+    path = /timemachine
+    guest ok = no
+    browseable = yes
+    writeable = yes
+    create mask = 0600
+    directory mask = 0700
+    spotlight = yes
+    vfs objects = catia fruit streams_xattr
+    fruit:aapl = yes
+    fruit:time machine = yes

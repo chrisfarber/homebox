@@ -3,3 +3,13 @@
   apt:
     state: latest
     name: samba
+- name: sambda config
+  become: true
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0644
+    validate: testparm -s "%s"
+  notify: restart samba
