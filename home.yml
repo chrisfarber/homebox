@@ -4,3 +4,5 @@
     - vars/home.yml
   roles:
     - fileserver
+    - docker
+    - unifi

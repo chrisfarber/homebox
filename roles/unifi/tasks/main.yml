@@ -1,0 +1,14 @@
+- name: unifi account
+  become: true
+  user:
+    name: unifi
+    state: present
+    groups: docker
+- name: unifi docker-compose
+  become: true
+  become_user: unifi
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/unifi/docker-compose.yml
+    owner: unifi
+    mode: 0600
