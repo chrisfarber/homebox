@@ -1,0 +1,16 @@
+server {
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	server_name lactobasilisk.com www.lactobasilisk.com;
+	ssl_certificate /etc/letsencrypt/live/lactobasilisk.com/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/lactobasilisk.com/privkey.pem; # managed by Certbot
+
+	root /var/www/lactobasilisk;
+	index index.html index.htm;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+}
