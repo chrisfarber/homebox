@@ -1,3 +1,13 @@
+###
+# Redirect to SSL
+##
+
+server {
+	listen 80 default_server;
+	server_name lactobasilisk.com www.lactobasilisk.com;
+	return 301 https://$host$request_uri;
+}
+
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
@@ -12,5 +22,10 @@ server {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
 		try_files $uri $uri/ =404;
+	}
+
+	location /oc {
+		alias /home/chrisfarber/opencomputers;
+		autoindex on;
 	}
 }
