@@ -2,12 +2,14 @@
   become: true
   apt:
     name: ["nginx", "certbot", "python3-certbot-nginx"]
+
 - name: disable default site
   become: true
   file:
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify: restart nginx
+
 - name: nginx config
   become: true
   template:
@@ -15,6 +17,7 @@
     dest: /etc/nginx/nginx.conf
     mode: 644
   notify: restart nginx
+
 - name: lactobasilisk site
   become: true
   template:
@@ -22,3 +25,28 @@
     dest: /etc/nginx/sites-enabled/lactobasilisk.conf
     mode: 644
   notify: restart nginx
+
+- name: lactobasilisk group
+  become: true
+  group:
+    name: lactobasilisk
+    state: present
+
+- name: lactobasilisk group members
+  become: true
+  with_items:
+    - chrisfarber
+    - chloe
+  user:
+    name: "{{ item }}"
+    append: true
+    groups: lactobasilisk
+
+- name: lactobasilisk data folder
+  become: true
+  file:
+    path: /home/lactobasilisk.com/
+    state: directory
+    owner: chrisfarber
+    group: lactobasilisk
+    mode: 0775

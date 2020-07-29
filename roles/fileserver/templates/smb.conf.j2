@@ -34,6 +34,18 @@
     browsable = yes
     writeable = yes
 
+[lactobasilisk.com]
+    path = /home/lactobasilisk.com
+    guest ok = no
+    browsable = yes
+    writeable = yes
+    valid users = @lactobasilisk
+    create mask = 0664
+    force create mode = 664
+    directory mask = 0775
+    force directory mask = 0775
+    force group = lactobasilisk
+
 [TimeMachine]
     comment = Time Machine
     path = /timemachine
